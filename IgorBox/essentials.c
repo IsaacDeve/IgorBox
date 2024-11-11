@@ -57,19 +57,6 @@ HWND IGOR_InitWindow(HINSTANCE hInstance, int nCmdShow, const char *title, int w
     //CONTROLS
 
 
-    HWND hwndButton = CreateWindowEx(
-    0,
-    "BUTTON",
-    "hey",
-    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-    50, 50, 100, 30,
-    hWnd,
-    (HMENU)1,
-    hInstance,
-    NULL
-    );
-
-
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
 
@@ -77,17 +64,17 @@ HWND IGOR_InitWindow(HINSTANCE hInstance, int nCmdShow, const char *title, int w
 }
 
 HWND IGOR_Button(HWND parentHwnd, HINSTANCE hInstance, const char *buttonText, int x, int y, int width, int height) {
-    HWND hwndButton = CreateWindowEx(
-        0,
-        "IGOR_BUTTON",
-        buttonText,
-        WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-        x, y, width, height,
-        parentHwnd,
-        (HMENU)1,
-        hInstance,
-        NULL
-    );
+HWND hwndButton = CreateWindowEx(
+    0,
+    "BUTTON",
+    buttonText,
+    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+    x, y, width, height,
+    parentHwnd,
+    (HMENU)1,
+    hInstance,
+    NULL
+);
 
     return hwndButton;
 }
