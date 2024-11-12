@@ -15,10 +15,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     if (window != NULL) { // checks if the window is already
 
-        //IGOR_Button(window, hInstance, "Igoryanchez", 500, 50, 100, 30);
-        HWND pizdyuk = IGOR_Button(window, hInstance, "Eblan", 100, 100, 100, 30);
-
-        HWND pizdyuk2 = IGOR_Button(window, hInstance, "Eblan", 100, 20, 100, 30);
+        IGOR_Rectangle(window, 10,10,50,50, RGB(255,0,0), RGB(0,255,0));
         
         //IGOR_MsgBox("TEST MessageBox", "Success", MB_OK | MB_ICONERROR); // calls a message box
         MSG msg;
