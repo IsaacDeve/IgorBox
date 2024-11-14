@@ -3,8 +3,19 @@
 
 const char ClassWindow_Name[] = "IgorBox_Window";
 
+bool keys[256] = {0};
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
+        case WM_SETCURSOR:
+            SetCursor(LoadCursor(NULL, IDC_ARROW));
+            return TRUE;
+        case WM_KEYDOWN:
+            keys[wParam] = true;
+            break;
+        case WM_KEYUP:
+            keys[wParam] = false;
+            break;
         case WM_DESTROY:
             PostQuitMessage(0);
             return 0;
@@ -56,25 +67,14 @@ HWND IGOR_InitWindow(HINSTANCE hInstance, int nCmdShow, const char *title, int w
 
     //CONTROLS
 
-
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
 
     return hWnd;
 }
 
-HWND IGOR_Button(HWND parentHwnd, HINSTANCE hInstance, const char *buttonText, int x, int y, int width, int height) {
-HWND hwndButton = CreateWindowEx(
-    0,
-    "BUTTON",
-    buttonText,
-    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-    x, y, width, height,
-    parentHwnd,
-    (HMENU)1,
-    hInstance,
-    NULL
-);
+int IGOR_GetScreenWidth()
+{ return (int)GetSystemMetrics(SM_CXSCREEN); }
 
-    return hwndButton;
-}
+int IGOR_GetScreenHeight()
+{ return (int)GetSystemMetrics(SM_CYSCREEN); }
