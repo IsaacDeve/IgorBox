@@ -24,6 +24,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     }
 }
 
+void IGOR_LockFPS(int targetFPS)
+{
+    static DWORD lastTime = 0;
+    DWORD currentTime = GetTickCount();
+    int frameTime = 1000 / targetFPS;
+
+    if (lastTime == 0) {
+        lastTime = currentTime;
+    }
+
+    if (currentTime - lastTime < frameTime) {
+        Sleep(frameTime - (currentTime - lastTime));
+    }
+    lastTime = GetTickCount();
+}
+
 void IGOR_MsgBox(const char *content, const char *title, UINT btn) {
     MessageBox(NULL, content, title, btn);
 }
@@ -71,6 +87,21 @@ HWND IGOR_InitWindow(HINSTANCE hInstance, int nCmdShow, const char *title, int w
     UpdateWindow(hWnd);
 
     return hWnd;
+}
+
+HWND IGOR_Button(HWND pwindow, HINSTANCE hInstance, int id, const char *text, int x, int y, int width, int height)
+{
+    return CreateWindow(
+        "BUTTON",
+        text,
+        WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+        x, y,
+        width, height,
+        pwindow,
+        (HMENU)(uintptr_t)id,
+        hInstance,
+        NULL
+    );
 }
 
 int IGOR_GetScreenWidth()

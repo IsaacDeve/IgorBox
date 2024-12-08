@@ -14,6 +14,12 @@ HWND IGOR_InitWindow(HINSTANCE hInstance, int nCmdShow, const char *title, int w
 int IGOR_GetScreenWidth();
 int IGOR_GetScreenHeight();
 
+void IGOR_LockFPS(int targetFPS);
+
+//CONTROLS
+HWND IGOR_Button(HWND pwindow, HINSTANCE hInstance, int id, const char *text, int x, int y, int width, int height);
+
+
 //input
 
 extern bool keys[256];
