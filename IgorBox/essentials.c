@@ -5,24 +5,6 @@ const char ClassWindow_Name[] = "IgorBox_Window";
 
 bool keys[256] = {0};
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-    switch (msg) {
-        case WM_SETCURSOR:
-            SetCursor(LoadCursor(NULL, IDC_ARROW));
-            return TRUE;
-        case WM_KEYDOWN:
-            keys[wParam] = true;
-            break;
-        case WM_KEYUP:
-            keys[wParam] = false;
-            break;
-        case WM_DESTROY:
-            PostQuitMessage(0);
-            return 0;
-        default:
-            return DefWindowProc(hWnd, msg, wParam, lParam);
-    }
-}
 
 void IGOR_LockFPS(int targetFPS)
 {
@@ -44,10 +26,31 @@ void IGOR_MsgBox(const char *content, const char *title, UINT btn) {
     MessageBox(NULL, content, title, btn);
 }
 
+HWND IGOR_Button(HWND pwindow, HINSTANCE hInstance, int id, const char *text, int x, int y, int width, int height)
+{
+    HWND button = CreateWindow(
+        "BUTTON",
+        text,
+        WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
+        x, y,
+        width, height,
+        pwindow,
+        (HMENU)(uintptr_t)id,
+        hInstance,
+        NULL
+    );
+
+    if (button == NULL)
+    {
+        IGOR_MsgBox("Cant create button lmao", "error", MB_OK | MB_ICONERROR);
+    }
+    return button;
+}
+
 HWND IGOR_InitWindow(HINSTANCE hInstance, int nCmdShow, const char *title, int width, int height, BOOL resize) {
     WNDCLASSEX wc = {};
     wc.cbSize = sizeof(WNDCLASSEX);
-    wc.lpfnWndProc = WndProc;
+    wc.lpfnWndProc = CustomWndProc;
     wc.hInstance = hInstance;
     wc.lpszClassName = ClassWindow_Name;
     wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
@@ -87,21 +90,6 @@ HWND IGOR_InitWindow(HINSTANCE hInstance, int nCmdShow, const char *title, int w
     UpdateWindow(hWnd);
 
     return hWnd;
-}
-
-HWND IGOR_Button(HWND pwindow, HINSTANCE hInstance, int id, const char *text, int x, int y, int width, int height)
-{
-    return CreateWindow(
-        "BUTTON",
-        text,
-        WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-        x, y,
-        width, height,
-        pwindow,
-        (HMENU)(uintptr_t)id,
-        hInstance,
-        NULL
-    );
 }
 
 int IGOR_GetScreenWidth()

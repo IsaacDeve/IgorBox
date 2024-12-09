@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 //ALL FUNCTIONS INITIALIZED HERE
+LRESULT CALLBACK CustomWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 void IGOR_MsgBox(const char *content, const char *title, UINT btn);
 //void IGOR_Window_ChangeTitle(HWND *win, const char *title);
